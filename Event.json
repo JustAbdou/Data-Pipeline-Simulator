@@ -1,0 +1,62 @@
+[
+    {
+        "eventType": "resume",
+        "timestamp": 1154,
+        "track": "trackH",
+        "username": "username1"
+    },
+    {
+        "eventType": "pause",
+        "timestamp": 10,
+        "track": "trackU",
+        "username": "username9"
+    },
+    {
+        "eventType": "skip",
+        "timestamp": 131,
+        "track": "trackY",
+        "username": "username2"
+    },
+    {
+        "eventType": "resume",
+        "timestamp": 491,
+        "track": "trackF",
+        "username": "username1"
+    },
+    {
+        "eventType": "pause",
+        "timestamp": 100,
+        "track": "trackI",
+        "username": "username5"
+    },
+    {
+        "eventType": "skip",
+        "timestamp": 153,
+        "track": "trackS",
+        "username": "username1"
+    },
+    {
+        "eventType": "pause",
+        "timestamp": 40,
+        "track": "trackG",
+        "username": "username2"
+    },
+    {
+        "eventType": "skip",
+        "timestamp": 382,
+        "track": "trackF",
+        "username": "username8"
+    },
+    {
+        "eventType": "pause",
+        "timestamp": 1236,
+        "track": "trackU",
+        "username": "username1"
+    },
+    {
+        "eventType": "resume",
+        "timestamp": 556,
+        "track": "trackN",
+        "username": "username7"
+    }
+]

@@ -1,0 +1,38 @@
+# Ignore build directory
+/build/
+out/
+bin/
+*.exe
+*.obj
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.lib
+*.pdb
+*.log
+*.pch
+*.ilk
+
+# Ignore CMake cache & generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore dependency manager files (vcpkg, Conan, etc.)
+vcpkg_installed/
+conan.lock
+conanbuildinfo.txt
+
+
+
+# Ignore core dumps
+core.*
