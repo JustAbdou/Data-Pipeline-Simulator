@@ -1,5 +1,10 @@
 #include "EventProcessor.h"
 #include <set>
+#include <future>
+#include <mutex>
+#include <iostream>
+#include <algorithm>
+
 
 EventProcessor::EventProcessor()
               :processedEvents()
@@ -9,16 +14,24 @@ EventProcessor::EventProcessor()
 void EventProcessor::ProcessEvents(json& eventArray)
 {
     json validEvents = json::array();
+    vector<future<json>> futures;
+
 
     for (auto& event : eventArray)
     {
-        if (ValidateEvent(event))
+        futures.push_back(std::async(std::launch::async, [&event, this]() {
+            cout << "different thread" << endl;
+            return ValidateEvent(event) ? event : json();
+        }));
+    }
+
+    for(auto& future: futures)
+    {
+        json result = future.get();
+        if(!result.empty())
         {
-            validEvents.push_back(event);
-        }
-        else
-        {
-            std::cerr << "Skipping invalid event: " << event.dump(4) << std::endl;
+            std::lock_guard<std::mutex> lock(eventMutex);
+            validEvents.push_back(result);
         }
     }
 

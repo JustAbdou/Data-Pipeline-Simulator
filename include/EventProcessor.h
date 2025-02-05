@@ -3,9 +3,10 @@
 
 #include <nlohmann/json.hpp>
 #include <set>
-#include <iostream>
-#include <vector>
+#include <future>
 #include <mutex>
+#include <iostream>
+#include <algorithm>
 
 //using
 using json = nlohmann::json;
@@ -17,17 +18,17 @@ public:
 
     EventProcessor();
 
-    void        ProcessEvents(json& eventArray);
-    json&       GetProcessedData();
+    void                ProcessEvents(json& eventArray);
+    vector<json>        GetProcessedData() { return processedEvents; }
 
 private:
 
-    bool        ValidateEvent(json& event);
-    void        RemoveDuplicates(json& eventArray);
-    void        StoreProcessedEvents();
-    void        SortEvents();
+    bool                ValidateEvent(json& event);
+    void                RemoveDuplicates(json& eventArray);
+    void                StoreProcessedEvents();
+    void                SortEvents();
 
-
+    std::mutex               eventMutex;
     // set<vector<json>>
     vector<json>       processedEvents;
 };
