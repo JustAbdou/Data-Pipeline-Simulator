@@ -8,17 +8,23 @@ EventProcessor::EventProcessor()
 
 void EventProcessor::ProcessEvents(json& eventArray)
 {
-    for(auto& event: eventArray)
+    json validEvents = json::array();
+
+    for (auto& event : eventArray)
     {
-        if(!ValidateEvent(event))
+        if (ValidateEvent(event))
         {
-            return;
+            validEvents.push_back(event);
+        }
+        else
+        {
+            std::cerr << "Skipping invalid event: " << event.dump(4) << std::endl;
         }
     }
 
-    RemoveDuplicates(eventArray);
+    RemoveDuplicates(validEvents);
     SortEvents();
-    // StoreProcessedEvents();
+    StoreProcessedEvents();
 }
 
 bool EventProcessor::ValidateEvent(json& event) 
@@ -39,36 +45,25 @@ bool EventProcessor::ValidateEvent(json& event)
 
 void EventProcessor::RemoveDuplicates(json& eventArray)
 {
-    for(auto& event: eventArray)
+    // Remove duplicates
+    set<json> arr{eventArray.begin(), eventArray.end()};
+
+    // Append them to the final array
+    for(auto& event: arr)
     {
-        processedEvents.emplace(event);
+        processedEvents.push_back(event);
     }
 }
 
 void EventProcessor::SortEvents()
 {
-    // Convert set to vector for sorting
-    std::vector<json> eventVector(processedEvents.begin(), processedEvents.end());
-
-    // Print before sorting
-    std::cout << "Before sorting:\n";
-    for (const auto& d : eventVector) {
-        std::cout << d.dump(4) << std::endl;
-    }
-
     // Sort the vector based on timestamps (ascending order)
     auto sortByTimeStamps = [] (const json& eventA, const json& eventB) -> bool
     {
         return eventA["timestamp"] < eventB["timestamp"];  // Smallest timestamp first
     };
 
-    std::sort(eventVector.begin(), eventVector.end(), sortByTimeStamps);
-
-    // Print after sorting
-    std::cout << "\nAfter sorting:\n";
-    for (const auto& d : eventVector) {
-        std::cout << d.dump(4) << std::endl;
-    }
+    std::sort(processedEvents.begin(), processedEvents.end(), sortByTimeStamps);
 }
 
 void EventProcessor::StoreProcessedEvents()
