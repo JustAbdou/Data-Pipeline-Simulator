@@ -60,5 +60,29 @@ void EventGenerator::WriteToFile(const string& fileName)
 
 json& EventGenerator::GetEventDataList()
 {
+    if (dataEventList.empty())  // Load from file only if dataEventList is empty
+    {
+        std::string filePath = "C:/Users/Abdo/Desktop/Data-Pipeline-Simulator/Event.json";
+        std::ifstream file(filePath);
+
+        if (file.is_open())
+        {
+            try
+            {
+                file >> dataEventList; // Read entire JSON content into dataEventList
+            }
+            catch (const std::exception& e)
+            {
+                std::cerr << "Error reading JSON file: " << e.what() << std::endl;
+                dataEventList = json::array(); // Reset to an empty JSON array on failure
+            }
+            file.close();
+        }
+        else
+        {
+            std::cerr << "Error: Could not open file at " << filePath << std::endl;
+        }
+    }
+
     return dataEventList;
 }

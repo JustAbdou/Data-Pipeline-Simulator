@@ -2,6 +2,8 @@
 #define EVENT_PROCESSOR_H
 
 #include <nlohmann/json.hpp>
+#include <set>
+#include <iostream>
 
 //using
 using json = nlohmann::json;
@@ -12,15 +14,17 @@ class EventProcessor
 public:
     EventProcessor();
 
-    // Event Processing
     void ProcessEvents(json& eventArray);
-    bool ValidateEvent(json& event);
-    void SortEvents(json&   eventArray);
-    void RemoveDuplicates(json& eventArray);
-    void StoreProcessedEvents(const json& eventArray);
 
 private:
+    bool ValidateEvent(json& event);
+    void RemoveDuplicates(json& eventArray);
+    void StoreProcessedEvents();
+    void SortEvents();
+
+
     // set<vector<json>>
+    set<json>       processedEvents;
 };
 
 #endif // EVENT_PROCESSOR_H
